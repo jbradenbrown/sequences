@@ -12,7 +12,7 @@ apriori s t = (apriori' s t) . frequent' $ singletons t
 apriori' :: (Num b, Ord b) => b -> [[Text]] -> [(Pattern Text, b)] -> [(Pattern Text, b)]
 apriori' _ _ [] = []
 apriori' s t ps = (apriori' s t $ frequent' $ candidates t $ map fst $ ps) ++ ps
-  where frequent' xs = (frequent (genericLength t) s) $ foldl' (\acc n -> acc ++ filter (isInfixOf n) t) [] xs
+  where frequent' xs = (frequent (genericLength t) s) $ foldl' (\acc n -> acc ++ filter (`isInfixOf` n) xs) [] t
 
 count :: (Eq a, Ord a, Num b) => [Pattern a] -> [(Pattern a, b)]
 count = map (\x -> (head x, genericLength x)) . group . sort
