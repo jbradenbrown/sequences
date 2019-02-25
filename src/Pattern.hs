@@ -7,12 +7,10 @@ import Data.Text (Text)
 type Pattern a = [a]
 
 candidates :: [[Text]] -> [Pattern Text] -> [Pattern Text]
-candidates t xs = concat $ map (\l -> candidates' $ filter (isInfixOf l) xs) t
+candidates t xs = concat $ map (\l -> candidates' l $ concat $ filter (isInfixOf l) xs) t
 
-candidates' :: [Pattern Text] -> [Pattern Text]
-candidates' xs = [(head a):b | a <- xs,
-                               b <- xs,
-                               (tail a) `isPrefixOf` b]
+candidates' :: Pattern Text -> [Text] -> [Pattern Text]
+candidates' p all = [p ++ [a] | a <- all]
 
 instanceOf :: (Eq a, Ord a) => Pattern a -> [a] -> Bool
 instanceOf _ [] = False
