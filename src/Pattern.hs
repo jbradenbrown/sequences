@@ -7,7 +7,7 @@ import Data.Text (Text)
 type Pattern a = [a]
 
 candidates :: [[Text]] -> [Pattern Text] -> [Pattern Text]
-candidates t xs = concat $ map (\l -> candidates' l $ concat $ filter (isInfixOf l) t) xs
+candidates t xs = nub $ concat $ map (\l -> candidates' l $ concat $ filter (isInfixOf l) t) xs
 
 candidates' :: Pattern Text -> [Text] -> [Pattern Text]
 candidates' _ [] = []
