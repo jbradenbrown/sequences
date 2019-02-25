@@ -11,7 +11,7 @@ candidates t xs = concat $ map (\l -> candidates' l $ concat $ filter (isInfixOf
 
 candidates' :: Pattern Text -> [Text] -> [Pattern Text]
 candidates' _ [] = []
-candidates' p all@(x:xs) = case p `isPrefixOf` all of
+candidates' p all@(x:xs) = case p /= all && p `isPrefixOf` all of
   True -> [take (genericLength p + 1) all] ++ candidates' p xs
   False -> candidates' p xs
 
